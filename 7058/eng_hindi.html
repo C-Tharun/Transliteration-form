@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#5672ff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Lato, Arial;
+        box-sizing:border-box;
+    }
+    ::selection {
+      background: #5672ff;
+      color: white;
+    }
+    body {
+        background-color: #F6F9FD;
+        height: 100%;
+    }
+    .mb-100 {
+        margin-bottom: 100px!important;
+    }
+    
+    .mt-100 {
+        margin-top: 100px!important;
+    }
+    
+    .mt-50 {
+        margin-top: 50px!important;
+    }
+    .container {
+        margin: 0 auto;
+        max-width: 1150px;
+    }
+    .transliteration {
+        text-align: center;
+        margin: 0 auto;
+        background: white;
+        padding: 60px 80px;
+        border-radius: 8px;
+        box-shadow: 4px 4px 10px #f1f1ff, -4px -4px 10px #f1f1ff;
+    }
+    .transliteration-data {
+        width: 100%;
+    }
+    select#languageDropDown {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px!important;
+        font-weight: 600;
+        border-radius: 5px;
+        background: #5672ff;
+        border: 1px solid #cfd2d7;
+        color: white;
+        text-align: center;
+        -moz-appearance:none; /* Firefox */
+        -webkit-appearance:none; /* Safari and Chrome */
+        appearance:none;
+        background-image: linear-gradient(45deg, transparent 50%, white 50%), linear-gradient(135deg, white 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+        background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+        background-size: 5px 5px, 5px 5px, 1px 1.5em;
+        background-repeat: no-repeat;
+    }
+    select:focus-visible {
+        outline: none;
+    }
+    h1 {
+        margin-bottom: 30px;
+        font-size: 35px;
+    }
+    h2 {
+        margin-bottom: 30px;
+        font-size: 28px;
+        DISPLAY: BLOCK;
+    }
+    #errorDiv:not(:empty) {
+        background: #c37500;
+        color: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        font-weight: 700;
+        font-size: 23px;
+    }
+    textarea {
+       resize: none;
+       color: #30437b!important;
+       width: 100%;
+       font-size: 16px!important;
+       border-radius: 5px;
+       padding: 15px;
+       font-family: Lato, Arial!important;
+       border: 1px solid #cfd2d7;
+    }
+    .success-message {
+        margin-bottom: 30px;
+    }
+    @media only screen and (max-width: 767px) {
+        .transliteration {
+            padding: 20px;
+        }
+    }
+    
+
+    .btn {
+        display: inline-block;
+        padding: 4px 10px 4px;
+        font-size: 13px;
+        line-height: 18px;
+        color: #333;
+        text-align: center;
+        text-shadow: 0 1px 1px rgb(255 255 255 / 75%);
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #f5f5f5;
+        background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+        background-repeat: repeat-x;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%), 0 1px 2px rgb(0 0 0 / 5%);
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        margin: 0 1px;
+        outline: 0;
+        text-decoration: none;
+    }
+    .buttonwrapper {
+        position: relative;
+    }
+    .btn-floating {
+        z-index: 1;
+        display: inline-block;
+        padding: 0;
+        margin: 10px;
+        overflow: hidden;
+        vertical-align: middle;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: all .2s ease-in-out;
+        width: 36px;
+        height: 36px;
+        background: #5672ff;
+        position: absolute;
+        bottom: 6px;
+    }
+    .btn-floating i {
+        font-size: .96154rem;
+        line-height: 36.15385px;
+        display: inline-block;
+        width: inherit;
+        color: #fff;
+        text-align: center;
+    }
+    .floating-button1 {
+        left: 42px;
+    }
+    .floating-button2 {
+        left: 84px;
+    }
+    /* CSS For API Suggestion Buttons */    
+    .input-api-tranliterate-indic-suggestion-menu-item-highlight {
+        background-color:#5672ff;
+    }
+    .inputapi-transliterate-indic-suggestion-menu {
+        background: white;
+        border-radius: 2px;
+        border: none;
+        padding: 10px;
+        font-size: 16px!important;
+    }
+    .inputapi-transliterate-indic-suggestion-menuitem {
+        padding: 6px;
+    }
+    #input_tool_helper {
+        height: 30px;
+        width: 100%;
+        color: #ccc;
+        white-space: nowrap;
+        /*overflow-x: scroll;*/
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    /* CSS for Site Navigation Buttons */
+    .all-languages {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content:center;
+    }
+    .btn.btn-lg {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 15px;
+        min-width: 175px;
+        color: white;
+        background: #5572ff;
+    }
+    .btn.btn-lg:hover {
+        background: #4160f9;
+    }
+    @media only screen and (max-width: 767px) {
+        .btn.btn-lg {
+            min-width: 145px;
+        }
+    }
+    </style>
+<script type="application/ld+json">
+    {
+     "@context": "http://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement":
+     [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "item":
+       {
+        "@id": "https://transliteration.io/",
+        "name": "Transliteration"
+        }
+      },
+      {
+       "@type": "ListItem",
+      "position": 2,
+      "item":
+       {
+         "@id": "https://transliteration.io/typing/english-to-hindi-typing/",
+         "name": "English to Hindi to English Typing"
+       }
+      }
+     ]
+    }
+</script>
+</head>
+<body>
+<div class="container mt-100">
+<section class="transliteration">
+<div class="transliteration-data">
+<h1>English to Hindi to English Transliteration</h1>
+<div id="translControl" class="toolbar">
+<div class="body">
+<div id="input_tool_helper">
+<em>Suggestion Word Appears Here!</em>
+</div>
+<input type="hidden" name="googleInputKeyCode" id="googleInputKeyCode" value="hi-t-i0-und">
+<div class="form-group buttonwrapper">
+</a>
+</a>
+<a id="copy" onclick="selectText('input_tool')" class="btn-floating floating-button2">
+<i class="fas fa-copy"></i>
+</a>
+<textarea id="input_tool" class="storable" dir="ltr" placeholder="Yaha Type Kare..." spellcheck="false" autocomplete="off" maxlength="500" rows="10"></textarea>
+<div id="errorDiv"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container mt-50 mb-100">
+
+</div>
+<style>
+.transliteration-article {
+    margin: 0 auto;
+    background: white;
+    padding: 60px 80px;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px #f1f1ff, -4px -4px 10px #f1f1ff;
+}
+
+.transliteration-article p {
+    margin-bottom: 20px;
+    color: #232323;
+    line-height: 28px;
+    font-size: 17px;
+}
+.transliteration-article h2 {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    text-align: center;
+}
+.transliteration-article ul {
+    margin-left: 15px;
+    margin-bottom: 25px;
+}
+.transliteration-article li {
+    padding-left: 8px;
+    margin-bottom: 12px;
+    color: #232323;
+    line-height: 28px;
+    font-size: 17px;
+}
+</style>
+<div class="container mt-50 mb-100">
+</div><script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script async type="text/javascript" src="https://transliteration.io/2.js?v=4"></script>
+<script>
+if (window.location.href.indexOf("chinese") > -1) {
+    document.getElementById("googleInputKeyCode").value = "zh-t-i0-pinyin";
+}
+function languageChangeHandler() {
+    var dropdown = document.getElementById('languageDropDown');
+    var language = dropdown.options[dropdown.selectedIndex].value;
+    
+    if(language == 'yue-hant') {
+        document.getElementById("googleInputKeyCode").value = "yue-hant-t-i0-und";
+    }
+    else if(language == 'zh-t') {
+        document.getElementById("googleInputKeyCode").value = "zh-t-i0-pinyin";
+    }
+    else if(language == 'zh-hant') {
+        document.getElementById("googleInputKeyCode").value = "zh-hant-t-i0-und";
+    }
+}
+</script>
+<script>
+
+</script>
+<script>
+function selectText(containerid) {
+    if (document.selection) { // IE
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select();
+    } else if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNode(document.getElementById(containerid));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+    }
+    
+  /* Get the text field */
+  var copyText = document.getElementById(containerid);
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  //alert("Copied the text: " + copyText.value);
+}
+</script>
+<script>
+
+</script>
+<script>
+function LocalStorage() {}
+LocalStorage.prototype.write = function(key, value) {
+    localStorage.setItem(key, value)
+}
+LocalStorage.prototype.read = function(key) {
+    return localStorage.getItem(key)
+}
+function createCookie(name, value, days) {
+    var expires;
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString()
+    } else {
+        expires = ""
+    }
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/"
+}
+function readCookie(name) {
+    var nameEQ = encodeURIComponent(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length))
+    }
+    return null
+}
+var domainName = window.location.hostname;
+var pathName = window.location.pathname;
+var cleanPathName = pathName.replace("/", "_");
+if (typeof(Storage) !== "undefined") {
+    console.log('LocalStorage Supported.');
+    var storageKey = 'storageFor' + domainName + cleanPathName;
+    var storableTextarea = document.getElementsByClassName('storable')[0];
+    var storage = new LocalStorage();
+    storableTextarea.addEventListener('keyup', function(e) {
+        var content = this.value;
+        if (e.keyCode == 0 || e.keyCode == 32 || e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 46) {
+            storage.write(storageKey, content)
+        }
+    });
+    if (storage.read(storageKey) != null) {
+        storableTextarea.innerHTML = storage.read(storageKey)
+    }
+}
+else {
+    console.log('Local Storage Not Support. Defaulting Back to Cookie.');
+    var typingCookieName = 'saveTypingFor' + domainName + cleanPathName;
+    $('#languageTextarea, #languageTextareaNew').keyup(function(e) {
+        if (e.keyCode == 0 || e.keyCode == 32 || e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 46) {
+            var textareaContent = $('#languageTextarea, #languageTextareaNew').val();
+            createCookie(typingCookieName, textareaContent, 30)
+        }
+    });
+    if (readCookie(typingCookieName) != null) {
+        $('#languageTextarea, #languageTextareaNew').val(readCookie(typingCookieName).trim())
+    }
+}
+</script>
+</body>
+</html> 
